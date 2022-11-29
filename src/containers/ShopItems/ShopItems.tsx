@@ -4,13 +4,14 @@ import Card from "../../components/Card/Card";
 
 interface Props {
   jewelry: Jewelry[];
+  addToBasket: (jewelry: Jewelry) => void;
 }
 
-const ShopItems: React.FC<Props> = ({jewelry}) => {
+const ShopItems: React.FC<Props> = ({jewelry, addToBasket}) => {
   return (
     <div className="row m-4">
       {jewelry.map(item => (
-        <Card id={item.id} name={item.name} image={item.image} price={item.price}/>
+        <Card key={Math.random()} jewelry={item} onClick={() => addToBasket(item)}/>
       ))}
     </div>
   );

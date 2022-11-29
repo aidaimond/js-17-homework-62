@@ -3,9 +3,12 @@ import NavBar from "./components/NavBar/NavBar";
 import Home from "./containers/Home/Home";
 import {Route, Routes} from "react-router-dom";
 import ShopItems from "./containers/ShopItems/ShopItems";
+import Contacts from "./containers/Contacts/Contacts";
+import Basket from "./containers/Basket/Basket";
+import {BasketItems, Jewelry} from "./types";
 
 function App() {
-  const [jewelry, setJewelry] = useState([
+  const [jewelry, setJewelry] = useState<Jewelry[]>([
     {
       id: '1', name: 'Кольцо из белого золота с бриллиантами',
       image: 'https://pmdn.sokolov.io/pics/C2/16/7C6FE646D94F09BE8E1E7C8EDEA5.jpg', price: 5990
@@ -55,6 +58,26 @@ function App() {
       image: 'https://pmdn.sokolov.io/pics/6D/C1/F8258D4DA22CB0FAF3F9753FD7D6.jpg', price: 156590
     },
   ]);
+
+  const [basket, setBasket] = useState<BasketItems[]>([]);
+
+  const addItems = (jewelry: Jewelry) => {
+    setBasket(prev => {
+      const existingIndex = prev.findIndex(item => {
+        return item.jewelry === jewelry;
+      });
+
+      if (existingIndex !== -1) {
+        const itemsCopy = [...prev];
+        const itemCopy = {...prev[existingIndex]};
+        itemCopy.amount++;
+        itemsCopy[existingIndex] = itemCopy;
+        return itemsCopy;
+      }
+      return [...prev, {jewelry, amount: 1}];
+    });
+  };
+
   return (
     <>
       <header>
@@ -62,12 +85,20 @@ function App() {
       </header>
       <main className="container-fluid">
         <Routes>
-          <Route path="/shop" element={(
-            <ShopItems jewelry={jewelry}/>
-          )}>
-          </Route>
           <Route path="/" element={(
             <Home/>
+          )}>
+          </Route>
+          <Route path="/shop" element={(
+            <ShopItems jewelry={jewelry} addToBasket={addItems}/>
+          )}>
+          </Route>
+          <Route path="/basket" element={(
+            <Basket basket={basket}/>
+          )}>
+          </Route>
+          <Route path="/contacts" element={(
+            <Contacts/>
           )}>
           </Route>
           <Route path="*" element={(
@@ -75,7 +106,6 @@ function App() {
           )}/>
         </Routes>
       </main>
-
     </>
   );
 }

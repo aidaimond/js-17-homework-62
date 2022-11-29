@@ -4,3 +4,8 @@ export interface Jewelry {
   image: string;
   price: number;
 }
+
+export interface BasketItems {
+  jewelry: Jewelry;
+  amount: number;
+}
