@@ -8,7 +8,7 @@ const Card: React.FC<Props> = (props) => {
   return (
    <div className="col-3 mb-4">
      <div className="card">
-       <img src={props.image} className="card-img-top" alt="..."/>
+       <img src={props.image} className="card-img-top" alt="items"/>
        <div className="card-body">
          <h5 className="card-title">{props.name}</h5>
        </div>

@@ -1,12 +1,12 @@
 import React from 'react';
 import {Jewelry} from "../../types";
-import Card from "../Card/Card";
+import Card from "../../components/Card/Card";
 
 interface Props {
   jewelry: Jewelry[];
 }
 
-const Shop: React.FC<Props> = ({jewelry}) => {
+const ShopItems: React.FC<Props> = ({jewelry}) => {
   return (
     <div className="row m-4">
       {jewelry.map(item => (
@@ -16,4 +16,4 @@ const Shop: React.FC<Props> = ({jewelry}) => {
   );
 };
 
-export default Shop;
+export default ShopItems;
